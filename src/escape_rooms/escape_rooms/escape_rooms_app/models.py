@@ -60,15 +60,24 @@ class Reservation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     datetime = models.DateTimeField()  # TODO  --> validator for even hours - from-to; validator for free hours;
-    # TODO --> unique room-datetime combination
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['room', 'datetime'], name='reservation unique room datetime')
+        ]
 
 
 class Game(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    datetime = models.DateTimeField()  # TODO  --> unique room-datetime combination; rename to start_datetime
+    datetime = models.DateTimeField()  # TODO  --> rename to start_datetime
     duration = models.DurationField()
     used_jokers_count = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['room', 'datetime'], name='game unique room datetime')
+        ]
 
 
 class Review(models.Model):
