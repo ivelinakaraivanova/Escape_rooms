@@ -18,7 +18,7 @@ class Room(models.Model):
         (TYPE_CHOICE_FANTASY, 'Fantasy'),
 
     )
-    title = models.CharField(
+    name = models.CharField(
         max_length=30,
         unique=True,
     )
@@ -57,22 +57,23 @@ class Team(models.Model):
 
 
 class Reservation(models.Model):
-    # room = models.ManyToManyField()
-    # team = models.ManyToManyField()
-    datetime = models.DateTimeField()  # TODO  --> datetimefield
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    datetime = models.DateTimeField()  # TODO  --> validator for even hours - from-to; validator for free hours;
+    # TODO --> unique room-datetime combination
 
 
 class Game(models.Model):
-    # room = models.ManyToManyField()
-    # team = models.ManyToManyField()
-    datetime = models.DateTimeField()  # TODO  --> datetimefield
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    datetime = models.DateTimeField()  # TODO  --> unique room-datetime combination; rename to start_datetime
     duration = models.DurationField()
-    used_jokers_count = models.PositiveIntegerField()
+    used_jokers_count = models.PositiveIntegerField(default=0)
 
 
 class Review(models.Model):
-    # player = models.ForeignKey()
-    # room = models.ForeignKey()
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date = models.DateField()
     content = models.TextField()
     decors_rate = models.PositiveIntegerField(

@@ -2,7 +2,7 @@ from django.urls import path
 
 from escape_rooms.escape_rooms_app.views import RoomCreateView, RoomDetailView, RoomListView, TeamListView, \
     TeamCreateView, TeamDetailView, GameListView, GameDetailView, GameCreateView, ReservationListView, \
-    ReservationDetailView, ReservationCreateView
+    ReservationDetailView, ReservationCreateView, ReviewListView, ReviewDetailView, ReviewCreateView
 
 
 class ReservationTeamDetailView:
@@ -22,7 +22,7 @@ urlpatterns = [
     path('reservations/', ReservationListView.as_view()),
     path('reservation/<int:pk>/', ReservationDetailView.as_view()),
     path('reservation/', ReservationCreateView.as_view()),
-    path('reviews/', ReservationListView.as_view()),
-    path('review/<int:pk>/', ReservationDetailView.as_view()),
-    path('review/', ReservationCreateView.as_view()),
+    path('reviews/', ReviewListView.as_view()),
+    path('review/<int:pk>/', ReviewDetailView.as_view()),
+    path('review/', ReviewCreateView.as_view()),
 ]

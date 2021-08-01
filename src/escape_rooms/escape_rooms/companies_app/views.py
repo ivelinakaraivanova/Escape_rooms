@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from escape_rooms.companies_app.models import Company
 from escape_rooms.companies_app.serializers import CompanySerializer
@@ -12,10 +12,12 @@ class CompanyListView(ListAPIView):
 
 
 class CompanyCreateView(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
 
 class CompanyDetailView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
