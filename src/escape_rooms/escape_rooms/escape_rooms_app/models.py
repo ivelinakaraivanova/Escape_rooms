@@ -1,8 +1,10 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import CheckConstraint, Q, F
 from rest_framework.authtoken.admin import User
 
 from escape_rooms.companies_app.models import Company
+from escape_rooms.escape_rooms_app.validators import validate_start_time
 
 
 class Room(models.Model):
@@ -29,6 +31,7 @@ class Room(models.Model):
     )
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=100)
+    owner_company = models.ForeignKey(Company, on_delete=models.RESTRICT)
     opening_date = models.DateField()
     difficulty = models.PositiveIntegerField(
         validators=[
@@ -41,14 +44,21 @@ class Room(models.Model):
             MinValueValidator(2),
         ]
     )
-    # TODO --> test validation min_players <= max_players
+
     max_players = models.PositiveIntegerField(
         validators=[
             MinValueValidator(2),
             MaxValueValidator(6),
         ]
     )
-    owner_company = models.ForeignKey(Company, on_delete=models.RESTRICT)
+
+    class Meta:
+        constraints = [
+            CheckConstraint(
+                check=Q(max_players__gte=F('min_players')),
+                name='check_room_min_max_players',
+            ),
+        ]
 
 
 class Team(models.Model):
@@ -59,7 +69,11 @@ class Team(models.Model):
 class Reservation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    datetime = models.DateTimeField()  # TODO  --> validator for even hours - from-to; validator for free hours;
+    datetime = models.DateTimeField(
+        validators=[
+            validate_start_time
+        ]
+    )  # TODO  --> rename to start_datetime
 
     class Meta:
         constraints = [
@@ -109,4 +123,8 @@ class Review(models.Model):
             MaxValueValidator(10),
         ]
     )
-    total_rate = models.PositiveIntegerField()  # TODO--> how to make calculated field
+    total_rate = models.FloatField()
+
+    def save(self, *args, **kwargs):
+        self.total_rate = (self.decors_rate + self.puzzle_rate + self.staff_rate + self.story_rate) / 4
+        super(Review, self).save(*args, **kwargs)

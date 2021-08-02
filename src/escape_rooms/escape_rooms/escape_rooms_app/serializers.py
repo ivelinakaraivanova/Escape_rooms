@@ -14,18 +14,13 @@ class RoomListDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = '__all__'
-        depth = 1   # TODO --> nested serializers after more fields in company
+        depth = 1   # TODO --> nested serializers after making more fields in company
 
 
 class RoomCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = '__all__'
-
-    def validate(self, data):  # TODO --> write test; check constraint
-        if data['min_players'] > data['max_players']:
-            raise serializers.ValidationError('Minimum players cannot be bigger than maximum players')
-        return data
 
 
 class RoomShortSerializer(serializers.ModelSerializer):
@@ -67,10 +62,6 @@ class ReservationListDetailSerializer(serializers.ModelSerializer):
 
 
 class ReservationCreateUpdateSerializer(serializers.ModelSerializer):
-    # room = serializers.PrimaryKeyRelatedField(
-    #     queryset=Room.objects.all())
-    # team = serializers.PrimaryKeyRelatedField(
-    #     queryset=Team.objects.all())
 
     class Meta:
         model = Reservation
@@ -114,4 +105,4 @@ class ReviewCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = '__all__'
+        exclude = ('total_rate',)
