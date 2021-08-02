@@ -111,4 +111,4 @@ class ReviewCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        exclude = ('total_rate',)
+        exclude = ('total_rate', 'date')

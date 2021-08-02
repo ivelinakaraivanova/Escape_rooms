@@ -103,7 +103,7 @@ class Game(models.Model):
 class Review(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)  # TODO --> only player who played can write review; should be logged in user
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    date = models.DateField()   # TODO --> today - auto_now
+    date = models.DateField(auto_now=True)
     content = models.TextField()
     decors_rate = models.PositiveIntegerField(
         validators=[

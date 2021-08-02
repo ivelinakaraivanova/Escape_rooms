@@ -7,5 +7,5 @@ def validate_start_time(value):
     if value.hour not in possible_start_hours:
         raise ValidationError('Start hour should be within even hours from 10 to 20')
     if value.minute != 0 or value.second != 0 or value.microsecond != 0:
-        raise ValidationError('Start time should be on the hour')   # TODO --> correct the message
+        raise ValidationError('Start time should be on the hour')
     return value
