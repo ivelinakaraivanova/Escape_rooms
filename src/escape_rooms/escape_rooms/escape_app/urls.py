@@ -1,8 +1,9 @@
 from django.urls import path
 
-from escape_rooms.escape_rooms_app.views import RoomCreateView, RoomDetailView, RoomListView, TeamListView, \
+from escape_rooms.escape_app.views import RoomCreateView, RoomDetailView, RoomListView, TeamListView, \
     TeamCreateView, TeamDetailView, GameListView, GameDetailView, GameCreateView, ReservationListView, \
-    ReservationDetailView, ReservationCreateView, ReviewListView, ReviewDetailView, ReviewCreateView
+    ReservationDetailView, ReservationCreateView, ReviewListView, ReviewDetailView, ReviewCreateView, CompanyListView, \
+    CompanyDetailView, CompanyCreateView
 
 
 class ReservationTeamDetailView:
@@ -10,6 +11,9 @@ class ReservationTeamDetailView:
 
 
 urlpatterns = [
+    path('companies/', CompanyListView.as_view()),
+    path('company/<int:pk>/', CompanyDetailView.as_view()),
+    path('company/', CompanyCreateView.as_view()),
     path('rooms/', RoomListView.as_view()),
     path('room/<int:pk>/', RoomDetailView.as_view()),
     path('room/', RoomCreateView.as_view()),

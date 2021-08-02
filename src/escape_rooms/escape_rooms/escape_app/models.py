@@ -3,8 +3,14 @@ from django.db import models
 from django.db.models import CheckConstraint, Q, F
 from rest_framework.authtoken.admin import User
 
-from escape_rooms.companies_app.models import Company
-from escape_rooms.escape_rooms_app.validators import validate_start_time
+from escape_rooms.escape_app.validators import validate_start_time
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name_plural = 'Companies'
 
 
 class Room(models.Model):
@@ -68,36 +74,36 @@ class Team(models.Model):
 
 class Reservation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    datetime = models.DateTimeField(
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)    # TODO --> players number should be within min-max room players
+    start_datetime = models.DateTimeField(
         validators=[
             validate_start_time
         ]
-    )  # TODO  --> rename to start_datetime
+    )
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['room', 'datetime'], name='reservation unique room datetime')
+            models.UniqueConstraint(fields=['room', 'start_datetime'], name='reservation unique room start_datetime')
         ]
 
 
 class Game(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    datetime = models.DateTimeField()  # TODO  --> rename to start_datetime
+    start_datetime = models.DateTimeField() # TODO --> cannot be a future date
     duration = models.DurationField()
     used_jokers_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['room', 'datetime'], name='game unique room datetime')
+            models.UniqueConstraint(fields=['room', 'start_datetime'], name='game unique room start_datetime')
         ]
 
 
 class Review(models.Model):
-    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    player = models.ForeignKey(User, on_delete=models.CASCADE)  # TODO --> only player who played can write review; should be logged in user
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField()   # TODO --> today - auto_now
     content = models.TextField()
     decors_rate = models.PositiveIntegerField(
         validators=[

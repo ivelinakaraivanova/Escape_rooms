@@ -1,13 +1,19 @@
 from rest_framework import serializers
 from rest_framework.authtoken.admin import User
 
-from escape_rooms.escape_rooms_app.models import Room, Team, Game, Reservation, Review
+from escape_rooms.escape_app.models import Room, Team, Game, Reservation, Review, Company
 
 
 class UserNameSerializer(serializers.ModelSerializer):  # TODO --> to move to accounts
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name']
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = '__all__'
 
 
 class RoomListDetailSerializer(serializers.ModelSerializer):
@@ -58,7 +64,7 @@ class ReservationListDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reservation
-        fields = ('id', 'room', 'team', 'datetime')
+        fields = ('id', 'room', 'team', 'start_datetime')
 
 
 class ReservationCreateUpdateSerializer(serializers.ModelSerializer):
@@ -74,7 +80,7 @@ class GameListDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'room', 'team', 'datetime', 'duration', 'used_jokers_count')
+        fields = ('id', 'room', 'team', 'start_datetime', 'duration', 'used_jokers_count')
 
 
 class GameCreateUpdateSerializer(serializers.ModelSerializer):

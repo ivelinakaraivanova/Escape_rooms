@@ -16,13 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from escape_rooms.escape_rooms_app import views
+from escape_rooms.escape_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('hello/', views.HelloView.as_view(), name='hello'),
     path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('escape_rooms.accounts_app.urls')),   # TODO --> api/v1/
-    path('escape/', include('escape_rooms.escape_rooms_app.urls')),
-    path('companies/', include('escape_rooms.companies_app.urls')),
+    path('escape/', include('escape_rooms.escape_app.urls')),
 ]
