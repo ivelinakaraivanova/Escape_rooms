@@ -80,7 +80,7 @@ class GameListDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'room', 'team', 'start_datetime', 'duration', 'used_jokers_count')
+        fields = ('id', 'room', 'team', 'game_date', 'duration', 'used_jokers_count')
 
 
 class GameCreateUpdateSerializer(serializers.ModelSerializer):

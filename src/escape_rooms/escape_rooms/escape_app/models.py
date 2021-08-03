@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import CheckConstraint, Q, F
@@ -90,14 +92,13 @@ class Reservation(models.Model):
 class Game(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    start_datetime = models.DateTimeField() # TODO --> cannot be a future date
+    game_date = models.DateField(
+        validators=[
+            MaxValueValidator(limit_value=date.today)
+         ]
+    )
     duration = models.DurationField()
     used_jokers_count = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['room', 'start_datetime'], name='game unique room start_datetime')
-        ]
 
 
 class Review(models.Model):
