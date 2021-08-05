@@ -5,17 +5,8 @@ from django.db import models
 from django.db.models import CheckConstraint, Q, F
 from rest_framework.authtoken.admin import User
 
+from escape_rooms.accounts_app.models import Company
 from escape_rooms.escape_app.validators import validate_start_time
-
-
-class Company(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        verbose_name_plural = 'Companies'
-
-    def __str__(self):
-        return f"{self.name}"
 
 
 class Room(models.Model):

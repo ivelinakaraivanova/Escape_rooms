@@ -1,28 +1,10 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from escape_rooms.escape_app.models import Room, Team, Game, Reservation, Review, Company
+from escape_rooms.escape_app.models import Room, Team, Game, Reservation, Review
 from escape_rooms.escape_app.serializers import RoomCreateUpdateSerializer, GameCreateUpdateSerializer, \
     ReviewCreateUpdateSerializer, TeamListSerializer, TeamDetailSerializer, TeamCreateUpdateSerializer, \
     ReservationListDetailSerializer, GameListDetailSerializer, ReviewListSerializer, ReservationCreateUpdateSerializer, \
-    ReviewDetailSerializer, RoomListDetailSerializer, CompanySerializer
-
-
-class CompanyListView(ListAPIView):
-    permission_classes = (AllowAny,)
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
-
-
-class CompanyCreateView(CreateAPIView):
-    permission_classes = (IsAuthenticated,)
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
-
-
-class CompanyDetailView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
+    ReviewDetailSerializer, RoomListDetailSerializer
 
 
 class RoomListView(ListAPIView):

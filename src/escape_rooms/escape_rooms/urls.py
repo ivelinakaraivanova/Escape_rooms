@@ -20,7 +20,6 @@ from escape_rooms.escape_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('hello/', views.HelloView.as_view(), name='hello'),
     path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('escape_rooms.accounts_app.urls')),   # TODO --> api/v1/
     path('escape/', include('escape_rooms.escape_app.urls')),

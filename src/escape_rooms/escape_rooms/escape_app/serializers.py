@@ -1,19 +1,9 @@
 from rest_framework import serializers
 from rest_framework.authtoken.admin import User
 
-from escape_rooms.escape_app.models import Room, Team, Game, Reservation, Review, Company
-
-
-class UserNameSerializer(serializers.ModelSerializer):  # TODO --> to move to accounts
-    class Meta:
-        model = User
-        fields = ['id', 'first_name', 'last_name']
-
-
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = '__all__'
+from escape_rooms.accounts_app.serializers import UserNameSerializer
+from escape_rooms.escape_app.models import *
+# Room, Team, Game, Reservation, Review
 
 
 class RoomListDetailSerializer(serializers.ModelSerializer):
