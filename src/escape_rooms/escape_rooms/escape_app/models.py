@@ -14,6 +14,9 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = 'Companies'
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Room(models.Model):
     TYPE_CHOICE_ACTION = 'action'
@@ -68,10 +71,16 @@ class Room(models.Model):
             ),
         ]
 
+    def __str__(self):
+        return f"{self.name} - {self.city} - {self.owner_company}"
+
 
 class Team(models.Model):
     name = models.CharField(max_length=20, unique=True)
     players = models.ManyToManyField(User)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Reservation(models.Model):
@@ -88,6 +97,9 @@ class Reservation(models.Model):
             models.UniqueConstraint(fields=['room', 'start_datetime'], name='reservation unique room start_datetime')
         ]
 
+    def __str__(self):
+        return f"{self.room} - {self.team}"
+
 
 class Game(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -99,6 +111,9 @@ class Game(models.Model):
     )
     duration = models.DurationField()
     used_jokers_count = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.room} - {self.team} - {self.game_date}"
 
 
 class Review(models.Model):
@@ -135,3 +150,6 @@ class Review(models.Model):
     def save(self, *args, **kwargs):
         self.total_rate = (self.decors_rate + self.puzzle_rate + self.staff_rate + self.story_rate) / 4
         super(Review, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.room} - {self.content} - {self.total_rate}"
