@@ -3,11 +3,6 @@ from django.contrib import admin
 from escape_rooms.escape_app.models import Company, Room, Team, Reservation, Game, Review
 
 
-@admin.register(Company)
-class CompanyAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     pass

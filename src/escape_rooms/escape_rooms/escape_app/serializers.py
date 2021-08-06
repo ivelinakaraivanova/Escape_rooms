@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.authtoken.admin import User
 
 from escape_rooms.accounts_app.serializers import UserNameSerializer
 from escape_rooms.escape_app.models import *
@@ -98,6 +97,9 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
 
 
 class ReviewCreateUpdateSerializer(serializers.ModelSerializer):
+    player = serializers.HiddenField(
+        default=serializers.CurrentUserDefault(),
+    )
 
     class Meta:
         model = Review

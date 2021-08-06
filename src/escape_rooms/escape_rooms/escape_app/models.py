@@ -1,9 +1,11 @@
+import datetime
 from datetime import date
 
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import CheckConstraint, Q, F
-from rest_framework.authtoken.admin import User
+from django.utils import timezone
 
 from escape_rooms.accounts_app.models import Company
 from escape_rooms.escape_app.validators import validate_start_time
@@ -63,7 +65,7 @@ class Room(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.name} - {self.city} - {self.owner_company}"
+        return f"{self.id} {self.name} - {self.city} - {self.owner_company}"
 
 
 class Team(models.Model):
@@ -71,7 +73,7 @@ class Team(models.Model):
     players = models.ManyToManyField(User)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.id} - {self.name}"
 
 
 class Reservation(models.Model):
@@ -79,7 +81,8 @@ class Reservation(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)    # TODO --> players number should be within min-max room players
     start_datetime = models.DateTimeField(
         validators=[
-            validate_start_time
+            validate_start_time,
+            MinValueValidator(limit_value=timezone.now)
         ]
     )
 
