@@ -11,6 +11,9 @@ class CompanyListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+    filterset_fields = '__all__'
+    search_fields = ['name']
+    ordering_fields = '__all__'
 
 
 class CompanyCreateView(CreateAPIView):
@@ -29,6 +32,9 @@ class EmployeeListView(ListAPIView):
     permission_classes = (IsSuperUser,)
     queryset = Employee.objects.all()
     serializer_class = EmployeeListDetailSerializer
+    filterset_fields = ['company']
+    # search_fields = [] no search needed
+    ordering_fields = ['user__username', 'company__name']   # TODO --> user - full name
 
 
 class EmployeeCreateView(CreateAPIView):

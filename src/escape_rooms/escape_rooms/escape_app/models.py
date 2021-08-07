@@ -24,7 +24,7 @@ class Room(models.Model):
         (TYPE_CHOICE_FANTASY, 'Fantasy'),
 
     )
-    name = models.CharField(
+    name = models.CharField(    # TODO --> increase max_length
         max_length=30,
         unique=True,
     )
@@ -111,7 +111,7 @@ class Game(models.Model):
 
 
 class Review(models.Model):
-    player = models.ForeignKey(User, on_delete=models.CASCADE)  # TODO --> only player who played can write review; should be logged in user
+    player = models.ForeignKey(User, on_delete=models.CASCADE)  # TODO --> only player who played can write review;
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date = models.DateField(auto_now=True)
     content = models.TextField()

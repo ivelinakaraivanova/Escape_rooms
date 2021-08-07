@@ -12,8 +12,17 @@ from escape_rooms.escape_app.serializers import RoomCreateUpdateSerializer, Game
 
 class RoomListView(ListAPIView):
     permission_classes = (AllowAny,)
-    queryset = Room.objects.all()
+    queryset = Room.objects.all()    # TODO --> total_rate
     serializer_class = RoomListDetailSerializer
+    filterset_fields = {
+        'city':['exact'],
+        'category':['exact'],
+        'owner_company': ['exact'],
+        'address': ['contains'],
+        'difficulty': ['exact', 'gte', 'gt', 'lte', 'lt']
+    }
+    search_fields = ['name', 'description', 'owner_company__name', 'city', 'address']
+    ordering_fields = '__all__'
 
 
 class RoomCreateView(CreateAPIView):
@@ -37,6 +46,9 @@ class TeamListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Team.objects.all()
     serializer_class = TeamListSerializer
+    filterset_fields = ['players__id']
+    search_fields = ['name']
+    ordering_fields = '__all__'
 
 
 class TeamCreateView(CreateAPIView):
@@ -60,6 +72,15 @@ class ReservationListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Reservation.objects.all()
     serializer_class = ReservationListDetailSerializer
+    filterset_fields = {
+        'room': ['exact'],
+        'team': ['exact'],
+        'start_datetime': ['exact', 'gte', 'gt', 'lte', 'lt',
+                           'date', 'date__gte',  'date__gt',
+                           'date__lte', 'date__lt']
+    }
+    # search_fields = [] no search needed
+    ordering_fields = ['room__name', 'team__name', 'start_datetime']
 
 
 class ReservationCreateView(CreateAPIView):
@@ -83,6 +104,13 @@ class GameListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Game.objects.all()
     serializer_class = GameListDetailSerializer
+    filterset_fields = {
+        'room': ['exact'],
+        'team': ['exact'],
+        'game_date': ['exact', 'gte', 'gt', 'lte', 'lt']
+    }
+    # search_fields = [] no search needed
+    ordering_fields = ['room__name', 'team__name', 'game_date']
 
 
 class GameCreateView(CreateAPIView):
@@ -106,6 +134,15 @@ class ReviewListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Review.objects.all()
     serializer_class = ReviewListSerializer
+    filterset_fields = {
+        'player': ['exact'],
+        'room': ['exact'],
+        'date': ['exact', 'gte', 'gt', 'lte', 'lt'],
+        'content': ['contains'],
+        'total_rate': ['exact', 'gte', 'gt', 'lte', 'lt']
+    }
+    search_fields = ['content']
+    ordering_fields = ['room__name', 'total_rate', 'date']
 
 
 class ReviewCreateView(CreateAPIView):
