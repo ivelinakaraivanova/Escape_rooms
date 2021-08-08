@@ -42,11 +42,6 @@ INSTALLED_APPS = [
 
     'django_filters',
 
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-
     'escape_rooms.accounts_app',
     'escape_rooms.escape_app',
 ]
@@ -62,7 +57,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-SITE_ID = 1
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

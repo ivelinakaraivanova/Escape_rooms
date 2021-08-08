@@ -1,10 +1,22 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from escape_rooms.accounts_app.models import Company, Employee
 from escape_rooms.accounts_app.permissions import IsSuperUser
 from escape_rooms.accounts_app.serializers import CompanySerializer, EmployeeCreateUpdateSerializer, \
-    EmployeeListDetailSerializer
+    EmployeeListDetailSerializer, UserCreateSerializer, UserUpdateSerializer
+
+
+class UserRegisterView(CreateAPIView):
+    serializer_class = UserCreateSerializer
+
+
+class UserUpdateView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserUpdateSerializer
+
+    def get_object(self):
+        return self.request.user
 
 
 class CompanyListView(ListAPIView):

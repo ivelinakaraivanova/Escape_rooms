@@ -9,7 +9,7 @@ from escape_rooms.escape_app.serializers import RoomCreateUpdateSerializer, Game
     ReservationListDetailSerializer, GameListDetailSerializer, ReviewListSerializer, ReservationCreateUpdateSerializer, \
     ReviewDetailSerializer, RoomListDetailSerializer
 
-
+# TODO --> pagination
 class RoomListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Room.objects.all()    # TODO --> total_rate
