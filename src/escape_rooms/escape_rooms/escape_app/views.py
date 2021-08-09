@@ -9,14 +9,14 @@ from escape_rooms.escape_app.serializers import RoomCreateUpdateSerializer, Game
     ReservationListDetailSerializer, GameListDetailSerializer, ReviewListSerializer, ReservationCreateUpdateSerializer, \
     ReviewDetailSerializer, RoomListDetailSerializer
 
-# TODO --> pagination
+
 class RoomListView(ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Room.objects.all()    # TODO --> total_rate
     serializer_class = RoomListDetailSerializer
     filterset_fields = {
-        'city':['exact'],
-        'category':['exact'],
+        'city': ['exact'],
+        'category': ['exact'],
         'owner_company': ['exact'],
         'address': ['contains'],
         'difficulty': ['exact', 'gte', 'gt', 'lte', 'lt']

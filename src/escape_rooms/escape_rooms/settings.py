@@ -55,7 +55,8 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'escape_rooms.common.paginations.ParamOnlyPagination',
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
