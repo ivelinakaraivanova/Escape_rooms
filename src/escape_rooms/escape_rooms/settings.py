@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'escape_rooms.accounts_app',
     'escape_rooms.escape_app',
+    'escape_rooms.organizations_app',
 ]
 
 REST_FRAMEWORK = {

@@ -1,4 +1,3 @@
-import datetime
 from datetime import date
 
 from django.contrib.auth.models import User
@@ -7,8 +6,8 @@ from django.db import models
 from django.db.models import CheckConstraint, Q, F
 from django.utils import timezone
 
-from escape_rooms.accounts_app.models import Company
 from escape_rooms.escape_app.validators import validate_start_time
+from escape_rooms.organizations_app.models import Company
 
 
 class Room(models.Model):
@@ -24,17 +23,17 @@ class Room(models.Model):
         (TYPE_CHOICE_FANTASY, 'Fantasy'),
 
     )
-    name = models.CharField(    # TODO --> increase max_length
-        max_length=30,
+    name = models.CharField(
+        max_length=50,
         unique=True,
     )
     description = models.TextField()
     category = models.CharField(
-        max_length=20,
+        max_length=50,
         choices=TYPE_CHOICES,
     )
-    city = models.CharField(max_length=30)
-    address = models.CharField(max_length=100)
+    city = models.CharField(max_length=50)
+    address = models.CharField(max_length=200)
     owner_company = models.ForeignKey(Company, on_delete=models.RESTRICT)
     opening_date = models.DateField()
     difficulty = models.PositiveIntegerField(
@@ -69,7 +68,7 @@ class Room(models.Model):
 
 
 class Team(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     players = models.ManyToManyField(User)
 
     def __str__(self):

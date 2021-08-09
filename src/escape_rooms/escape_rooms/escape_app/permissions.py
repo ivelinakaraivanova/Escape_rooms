@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-from escape_rooms.accounts_app.models import Employee
 from escape_rooms.escape_app.models import Team, Room
+from escape_rooms.organizations_app.models import Employee
 
 
 def is_company_employee(user_id, company_id):
