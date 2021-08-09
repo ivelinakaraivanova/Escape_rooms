@@ -1,5 +1,8 @@
+from rest_framework import status
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from escape_rooms.accounts_app.permissions import IsSuperUser
 from escape_rooms.organizations_app.models import Company, Employee
@@ -16,10 +19,22 @@ class CompanyListView(ListAPIView):
     ordering_fields = '__all__'
 
 
-class CompanyCreateView(CreateAPIView):
+# class CompanyCreateView(CreateAPIView):
+#     permission_classes = (IsSuperUser,)
+#     queryset = Company.objects.all()
+#     serializer_class = CompanySerializer
+
+
+class CompanyCreateView(APIView):
     permission_classes = (IsSuperUser,)
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
+
+    def post(self, request):
+        serializer = CompanySerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CompanyDetailView(RetrieveUpdateDestroyAPIView):
@@ -34,7 +49,7 @@ class EmployeeListView(ListAPIView):
     serializer_class = EmployeeListDetailSerializer
     filterset_fields = ['company']
     # search_fields = [] no search needed
-    ordering_fields = ['user__username', 'company__name']   # TODO --> user - full name
+    ordering_fields = ['user__username', 'user__first_name', 'user__last_name', 'company__name']
 
 
 class EmployeeCreateView(CreateAPIView):

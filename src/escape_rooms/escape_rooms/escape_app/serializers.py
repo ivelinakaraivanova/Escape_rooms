@@ -9,7 +9,7 @@ class RoomListDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = '__all__'
-        depth = 1   # TODO --> nested serializers after making more fields in company
+        depth = 1
 
 
 class RoomCreateUpdateSerializer(serializers.ModelSerializer):  # TODO --> current company by default
