@@ -6,6 +6,22 @@ from escape_rooms.escape_app.models import *
 
 
 class RoomListDetailSerializer(serializers.ModelSerializer):
+    review_count = serializers.SerializerMethodField()
+
+    def get_review_count(self, obj):
+        try:
+            return obj.review_count
+        except:
+            return None
+
+    average_total_rate = serializers.SerializerMethodField()
+
+    def get_average_total_rate(self, obj):
+        try:
+            return obj.average_total_rate
+        except:
+            return None
+
     class Meta:
         model = Room
         fields = '__all__'

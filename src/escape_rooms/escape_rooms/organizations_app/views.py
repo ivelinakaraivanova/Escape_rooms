@@ -11,6 +11,11 @@ from escape_rooms.organizations_app.serializers import CompanySerializer, Employ
 
 
 class CompanyListView(ListAPIView):
+    """
+    Returns a list of all companies.
+    No authentication required.
+    Optional filtering, searching, ordering and pagination.
+    """
     permission_classes = (AllowAny,)
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
@@ -26,6 +31,10 @@ class CompanyListView(ListAPIView):
 
 
 class CompanyCreateView(APIView):
+    """
+    Create a company.
+    Allowed for superuser only.
+    """
     permission_classes = (IsSuperUser,)
 
     def post(self, request):
@@ -38,12 +47,21 @@ class CompanyCreateView(APIView):
 
 
 class CompanyDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Read, update or delete a company.
+    Allowed for superuser only.
+    """
     permission_classes = (IsSuperUser,)
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
 
 class EmployeeListView(ListAPIView):
+    """
+    Returns a list of all employees.
+    Allowed for superuser only.
+    Optional filtering, ordering and pagination.
+    """
     permission_classes = (IsSuperUser,)
     queryset = Employee.objects.all()
     serializer_class = EmployeeListDetailSerializer
@@ -53,12 +71,20 @@ class EmployeeListView(ListAPIView):
 
 
 class EmployeeCreateView(CreateAPIView):
+    """
+    Create an employee.
+    Allowed for superuser only.
+    """
     permission_classes = (IsSuperUser,)
     queryset = Employee.objects.all()
     serializer_class = EmployeeCreateUpdateSerializer
 
 
 class EmployeeDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Read, update or delete an employee.
+    Allowed for superuser only.
+    """
     permission_classes = (IsSuperUser,)
     queryset = Employee.objects.all()
 

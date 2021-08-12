@@ -1,3 +1,4 @@
+from django.db.models import Count, Avg
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
@@ -11,27 +12,40 @@ from escape_rooms.escape_app.serializers import RoomCreateUpdateSerializer, Game
 
 
 class RoomListView(ListAPIView):
+    """
+    Returns a list of all escape rooms.
+    No authentication required.
+    Optional filtering, searching, ordering and pagination.
+    """
     permission_classes = (AllowAny,)
-    queryset = Room.objects.all()    # TODO --> total_rate
+    queryset = Room.objects.annotate(review_count=Count('review'), average_total_rate=Avg('review__total_rate'))
     serializer_class = RoomListDetailSerializer
     filterset_fields = {
         'city': ['exact'],
         'category': ['exact'],
         'owner_company': ['exact'],
         'address': ['contains'],
-        'difficulty': ['exact', 'gte', 'gt', 'lte', 'lt']
+        'difficulty': ['exact', 'gte', 'gt', 'lte', 'lt'],
     }
     search_fields = ['name', 'description', 'owner_company__name', 'city', 'address']
     ordering_fields = '__all__'
 
 
 class RoomCreateView(CreateAPIView):
+    """
+    Create an escape room.
+    Allowed for an employee of escape room's company and superuser only.
+    """
     permission_classes = (IsOwnerCompanyEmployeeOrReadOnly,)
     queryset = Room.objects.all()
     serializer_class = RoomCreateUpdateSerializer
 
 
 class RoomDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Read, update or delete an escape room.
+    Allowed for an employee of escape room's company and superuser only.
+    """
     permission_classes = (IsOwnerCompanyEmployeeOrReadOnly,)
     queryset = Room.objects.all()
 
@@ -43,6 +57,11 @@ class RoomDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class TeamListView(ListAPIView):
+    """
+    Returns a list of all teams.
+    No authentication required.
+    Optional filtering, searching, ordering and pagination.
+    """
     permission_classes = (AllowAny,)
     queryset = Team.objects.all()
     serializer_class = TeamListSerializer
@@ -52,12 +71,20 @@ class TeamListView(ListAPIView):
 
 
 class TeamCreateView(CreateAPIView):
+    """
+    Create a team.
+    Allowed for a member of the created team and superuser only.
+    """
     permission_classes = (IsMemberOrReadOnly,)
     queryset = Team.objects.all()
     serializer_class = TeamCreateUpdateSerializer
 
 
 class TeamDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Read, update or delete a team.
+    Allowed for a team member and superuser only.
+    """
     permission_classes = (IsMemberOrReadOnly,)
     queryset = Team.objects.all()
 
@@ -69,6 +96,11 @@ class TeamDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class ReservationListView(ListAPIView):
+    """
+    Returns a list of all reservations made.
+    No authentication required.
+    Optional filtering, ordering and pagination.
+    """
     permission_classes = (AllowAny,)
     queryset = Reservation.objects.all()
     serializer_class = ReservationListDetailSerializer
@@ -84,12 +116,20 @@ class ReservationListView(ListAPIView):
 
 
 class ReservationCreateView(CreateAPIView):
+    """
+    Create a game reservation.
+    Allowed for a team member, an employee of escape room's company or superuser.
+    """
     permission_classes = (IsTeamMemberOrRoomOwnerCompanyEmployeeOrReadOnly,)
     queryset = Reservation.objects.all()
     serializer_class = ReservationCreateUpdateSerializer
 
 
 class ReservationDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Read, update or delete a game reservation.
+    Allowed for a team member, an employee of escape room's company or superuser.
+    """
     permission_classes = (IsTeamMemberOrRoomOwnerCompanyEmployeeOrReadOnly,)
     queryset = Reservation.objects.all()
 
@@ -101,6 +141,11 @@ class ReservationDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class GameListView(ListAPIView):
+    """
+    Returns a list of all records for games played.
+    No authentication required.
+    Optional filtering, ordering and pagination.
+    """
     permission_classes = (AllowAny,)
     queryset = Game.objects.all()
     serializer_class = GameListDetailSerializer
@@ -114,12 +159,20 @@ class GameListView(ListAPIView):
 
 
 class GameCreateView(CreateAPIView):
+    """
+    Create a record for a game played.
+    Allowed for an employee of escape room's company and superuser only.
+    """
     permission_classes = (IsRoomOwnerCompanyEmployeeOrReadOnly,)
     queryset = Game.objects.all()
     serializer_class = GameCreateUpdateSerializer
 
 
 class GameDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Read, update or delete a record for a game played.
+    Allowed for an employee of escape room's company and superuser only.
+    """
     permission_classes = (IsRoomOwnerCompanyEmployeeOrReadOnly,)
     queryset = Game.objects.all()
 
@@ -131,6 +184,11 @@ class GameDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class ReviewListView(ListAPIView):
+    """
+    Returns a list of all reviews written.
+    No authentication required.
+    Optional filtering, searching, ordering and pagination.
+    """
     permission_classes = (AllowAny,)
     queryset = Review.objects.all()
     serializer_class = ReviewListSerializer
@@ -146,12 +204,20 @@ class ReviewListView(ListAPIView):
 
 
 class ReviewCreateView(CreateAPIView):
+    """
+    Create a review.
+    Allowed for authenticated user only.
+    """
     permission_classes = (IsAuthenticated,)
     queryset = Review.objects.all()
     serializer_class = ReviewCreateUpdateSerializer
 
 
 class ReviewDetailView(RetrieveUpdateDestroyAPIView):
+    """
+    Read, update or delete a review written.
+    Allowed for the review writer and superuser only.
+    """
     permission_classes = (IsUserReviewOrReadOnly,)
     queryset = Review.objects.all()
 

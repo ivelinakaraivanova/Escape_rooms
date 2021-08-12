@@ -5,6 +5,7 @@ from escape_rooms.organizations_app.models import Company, Employee
 
 
 class CompanySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Company
         fields = '__all__'
