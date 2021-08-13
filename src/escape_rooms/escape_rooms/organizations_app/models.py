@@ -1,5 +1,6 @@
-from django.contrib.auth.models import User
 from django.db import models
+
+from escape_rooms.accounts_app.models import User
 
 
 class Company(models.Model):

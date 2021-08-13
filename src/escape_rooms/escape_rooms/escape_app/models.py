@@ -1,11 +1,11 @@
 from datetime import date
 
-from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import CheckConstraint, Q, F
 from django.utils import timezone
 
+from escape_rooms.accounts_app.models import User
 from escape_rooms.escape_app.validators import validate_start_time
 from escape_rooms.organizations_app.models import Company
 
