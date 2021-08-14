@@ -37,6 +37,7 @@ The project presents a catalog of escape rooms and all activities related to the
   * username
   * password
   * email
+  * phone_number
   * first_name
   * last_name
 
@@ -88,125 +89,140 @@ The project presents a catalog of escape rooms and all activities related to the
 
 ## API Endpoints
 
-#### **/api/v1/accounts/register/**
+**/api/v1/accounts/register/**
 *	post
 
 *Create a new user. No authentication required.*
 
-#### **/api/v1/accounts/profile/**
+**/api/v1/accounts/profile/**
 *	get, put, patch, delete
 
-*Update current user details. Authentication is required.*
+*Read, update or delete current user details. Authentication is required.*
 
-#### **/api/v1/organizations/companies/**
+**/api/v1/organizations/companies/**
 *	get
 
 *Returns a list of all companies. No authentication required. 
 Optional filtering, searching, ordering and pagination.*
 
-#### **/api/v1/organizations/company/**
+**/api/v1/organizations/company/**
 *	post
 
 *Create a company. Allowed for superuser only.*
 
-#### **/api/v1/organizations/company/:id/**
+**/api/v1/organizations/company/:id/**
 *	get, put, patch, delete
 
 *Read, update or delete a company. Allowed for superuser only.*
 
-#### **/api/v1/organizations/employees/**
+**/api/v1/organizations/employees/**
 *	get
  
 *Returns a list of all employees. Allowed for superuser only.
 Optional filtering, ordering and pagination.*
 
-#### **/api/v1/organizations/employee/**
+**/api/v1/organizations/employee/**
 *	post
 
 *Create an employee. Allowed for superuser only.*
 
-#### **/api/v1/organizations/employee/:id/**
+**/api/v1/organizations/employee/:id/**
 *	get, put, patch, delete
 
 *Read, update or delete an employee. Allowed for superuser only.*
 
-#### **/api/v1/escape/rooms/**
+**/api/v1/escape/rooms/**
 *	get
 
 *Returns a list of all escape rooms. No authentication required.
 Optional filtering, searching, ordering and pagination.*
 
-#### **/api/v1/escape/room/**
+**/api/v1/escape/room/**
 *	post
 
 *Create an escape room. Allowed for an employee of escape room's company and superuser only.*
 
-#### **/api/v1/escape/room/:id/**
+**/api/v1/escape/room/:id/**
 *	get, put, patch, delete
 
-*Read, update or delete an escape room. Allowed for an employee of escape room's company and superuser only.*
+*Read, update or delete an escape room. Read allowed without authentication.
+Update and delete allowed for an employee of escape room's company and superuser only.*
 
-#### **/api/v1/escape/teams/**
+**/api/v1/escape/teams/**
 *	get
 
 *Returns a list of all teams. No authentication required.
 Optional filtering, searching, ordering and pagination.*
 
-#### **/api/v1/escape/team/**
+**/api/v1/escape/team/**
 *	post
 
 *Create a team. Allowed for a member of the created team and superuser only.*
 
-#### **/api/v1/escape/team/:id/**
+**/api/v1/escape/team/:id/**
 *	get, put, patch, delete
 
-*Read, update or delete a team. Allowed for a team member and superuser only.*
+*Read, update or delete a team. Read allowed without authentication.
+Update and delete allowed for a team member and superuser only.*
 
-#### **/api/v1/escape/reservations/**
+**/api/v1/escape/reservations/**
 *	get
 
 *Returns a list of all reservations made. No authentication required.
 Optional filtering, ordering and pagination.*
 
-#### **/api/v1/escape/reservation/**
+**/api/v1/escape/reservation/**
 *	post
 
 *Create a game reservation. Allowed for a team member, an employee of escape room's company or superuser.*
 
-#### **/api/v1/escape/reservation/:id/**
+**/api/v1/escape/reservation/:id/**
 *	get, put, patch, delete
 
-*Read, update or delete a game reservation. Allowed for a team member, an employee of escape room's company or superuser.*
+*Read, update or delete a game reservation. Read allowed without authentication.
+Update and delete allowed for a team member, an employee of escape room's company or superuser.*
 
-#### **/api/v1/escape/games/**
+**/api/v1/escape/games/**
 *	get
 
 *Returns a list of all records for games played. No authentication required.
 Optional filtering, ordering and pagination.*
 
-#### **/api/v1/escape/game/**
+**/api/v1/escape/game/**
 *	post
 
 *Create a record for a game played. Allowed for an employee of escape room's company and superuser only.*
 
-#### **/api/v1/escape/game/:id/**
+**/api/v1/escape/game/:id/**
 *	get, put, patch, delete
 
-*Read, update or delete a record for a game played. Allowed for an employee of escape room's company and superuser only.*
+*Read, update or delete a record for a game played. Read allowed without authentication.
+Update and delete allowed for an employee of escape room's company and superuser only.*
 
-#### **/api/v1/escape/reviews/**
+**/api/v1/escape/reviews/**
 *	get
 
 *Returns a list of all reviews written. No authentication required.
 Optional filtering, searching, ordering and pagination.*
 
-#### **/api/v1/escape/review/**
+**/api/v1/escape/review/**
 *	post
 
 *Create a review. Allowed for authenticated user only.*
 
-#### **/api/v1/escape/review/:id/**
+**/api/v1/escape/review/:id/**
 *	get, put, patch, delete
 
-*Read, update or delete a review written. Allowed for the review writer and superuser only.*
+*Read, update or delete a review written. Read allowed without authentication.
+Update and delete allowed for the review writer and superuser only.*
+
+### Standard rest-auth endpoints
+
+**/rest-auth/login**
+
+**/rest-auth/logout**
+
+**/rest/auth/password/change**
+
+**/rest-auth/password/reset**
 
