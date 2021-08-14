@@ -77,7 +77,7 @@ class Team(models.Model):
 
 class Reservation(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)    # TODO --> players number should be within min-max room players
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
     start_datetime = models.DateTimeField(
         validators=[
             validate_start_time,
@@ -110,7 +110,7 @@ class Game(models.Model):
 
 
 class Review(models.Model):
-    player = models.ForeignKey(User, on_delete=models.CASCADE)  # TODO --> only player who played can write review;
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date = models.DateField(auto_now=True)
     content = models.TextField()

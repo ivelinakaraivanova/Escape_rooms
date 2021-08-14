@@ -28,7 +28,7 @@ class RoomListDetailSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class RoomCreateUpdateSerializer(serializers.ModelSerializer):  # TODO --> current company by default
+class RoomCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = '__all__'
