@@ -44,7 +44,8 @@ class RoomCreateView(CreateAPIView):
 class RoomDetailView(RetrieveUpdateDestroyAPIView):
     """
     Read, update or delete an escape room.
-    Allowed for an employee of escape room's company and superuser only.
+    Read allowed without authentication.
+    Update and delete allowed for an employee of escape room's company and superuser only.
     """
     permission_classes = (IsOwnerCompanyEmployeeOrReadOnly,)
     queryset = Room.objects.all()
@@ -83,7 +84,8 @@ class TeamCreateView(CreateAPIView):
 class TeamDetailView(RetrieveUpdateDestroyAPIView):
     """
     Read, update or delete a team.
-    Allowed for a team member and superuser only.
+    Read allowed without authentication.
+    Update and delete allowed for a team member and superuser only.
     """
     permission_classes = (IsMemberOrReadOnly,)
     queryset = Team.objects.all()
@@ -128,7 +130,8 @@ class ReservationCreateView(CreateAPIView):
 class ReservationDetailView(RetrieveUpdateDestroyAPIView):
     """
     Read, update or delete a game reservation.
-    Allowed for a team member, an employee of escape room's company or superuser.
+    Read allowed without authentication.
+    Update and delete allowed for a team member, an employee of escape room's company or superuser.
     """
     permission_classes = (IsTeamMemberOrRoomOwnerCompanyEmployeeOrReadOnly,)
     queryset = Reservation.objects.all()
@@ -171,7 +174,8 @@ class GameCreateView(CreateAPIView):
 class GameDetailView(RetrieveUpdateDestroyAPIView):
     """
     Read, update or delete a record for a game played.
-    Allowed for an employee of escape room's company and superuser only.
+    Read allowed without authentication.
+    Update and delete allowed for an employee of escape room's company and superuser only.
     """
     permission_classes = (IsRoomOwnerCompanyEmployeeOrReadOnly,)
     queryset = Game.objects.all()
@@ -216,7 +220,8 @@ class ReviewCreateView(CreateAPIView):
 class ReviewDetailView(RetrieveUpdateDestroyAPIView):
     """
     Read, update or delete a review written.
-    Allowed for the review writer and superuser only.
+    Read allowed without authentication.
+    Update and delete allowed for the review writer and superuser only.
     """
     permission_classes = (IsUserReviewOrReadOnly,)
     queryset = Review.objects.all()
